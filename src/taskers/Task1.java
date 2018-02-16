@@ -6,17 +6,30 @@
 package taskers;
 
 import javafx.application.Platform;
+import notificationexamples.TaskState;
 import notificationexamples.NotificationsUIController;
 
 /**
  *
  * @author Professor Wergeles
+=======
+import notifcationexamples.TaskState;
+
+/**
+ *
+ * @author dalemusser
+ * 
+ * This example uses an object passed in with a notify()
+ * method that gets called when a notification is to occur.
+ * To accomplish this the Notifiable interface is needed.
+ * 
+>>>>>>> finished
  */
 public class Task1 extends Thread {
     
     private int maxValue, notifyEvery;
     boolean exit = false;
-    
+    TaskState state = TaskState.STOPPED;
     private Notifiable notificationTarget;
     
     public Task1(int maxValue, int notifyEvery)  {
@@ -27,6 +40,7 @@ public class Task1 extends Thread {
     @Override
     public void run() {
         doNotify("Task1 start.");
+        state = TaskState.RUNNING;
         for (int i = 0; i < maxValue; i++) {
             
             if (i % notifyEvery == 0) {
@@ -38,6 +52,7 @@ public class Task1 extends Thread {
             }
         }
         doNotify("Task1 done.");
+        state = TaskState.STOPPED;
     }
     
     public void end() {

@@ -18,11 +18,21 @@ import javafx.application.Platform;
  * 
  */
 
+import notificationexamples.TaskState;
+
+/**
+ *
+ * @author dalemusser
+ * 
+ * This example uses PropertyChangeSupport to implement
+ * property change listeners.
+ * 
+ */
 public class Task3 extends Thread {
     
     private int maxValue, notifyEvery;
     boolean exit = false;
-    
+    TaskState state = TaskState.STOPPED;
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     
     public Task3(int maxValue, int notifyEvery)  {
@@ -33,6 +43,7 @@ public class Task3 extends Thread {
     @Override
     public void run() {
         doNotify("Task3 start.");
+        state = TaskState.RUNNING;
         for (int i = 0; i < maxValue; i++) {
             
             if (i % notifyEvery == 0) {
@@ -44,6 +55,7 @@ public class Task3 extends Thread {
             }
         }
         doNotify("Task3 done.");
+        state = TaskState.STOPPED;
     }
     
     public void end() {
